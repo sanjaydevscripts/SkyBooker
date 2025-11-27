@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Add New Flight</h2>
+    <hr>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="card p-4 shadow">
+            {{ form.as_p }}
+
+            <button class="btn btn-primary mt-3">Add Flight</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

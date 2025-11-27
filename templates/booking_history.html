@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="probootstrap-cover overflow-hidden relative mt-0 pt-5"
+         style="background-image: url('{% static 'assets/images/bg_1.jpg' %}');" id="section-home">
+    <!--    <div class="overlay"></div>-->
+
+    <div class="container py-5">
+        <div class="bg-white p-4 rounded shadow">
+            <h3 class="text-center mb-4">My Booking History</h3>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success text-center">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+
+            {% if bookings %}
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Flight</th>
+                    <th>From → To</th>
+                    <th>Departure</th>
+                    <th>Passengers</th>
+                    <th>Total Price (₹)</th>
+                    <th>Ticket</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.flight.flight_number }} ({{ booking.flight.airline_name }})</td>
+                    <td>{{ booking.flight.from_city }} → {{ booking.flight.to_city }}</td>
+                    <td>{{ booking.flight.departure_date }}</td>
+                    <td>
+                        {% for passenger in booking.passengers.all %}
+                        {{ passenger.full_name }}{% if not forloop.last %},
+                        {% endif %}
+                        {% empty %}
+                        No passengers
+                        {% endfor %}
+                    </td>
+                    <td>{{ booking.total_price }}</td>
+                    <td>
+                        <a href="{% url 'download_ticket' booking.id %}" class="btn btn-success btn-sm">
+                            Download
+                        </a>
+                        <form action="{% url 'delete_booking' booking.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure you want to delete this booking?');">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="alert alert-info text-center">
+                You have no past bookings.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

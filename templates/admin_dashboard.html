@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="text-center">Admin Dashboard</h2>
+    <hr>
+
+    <h4>All Flights</h4>
+
+    <table class="table table-bordered mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>Flight Number</th>
+                <th>Airline</th>
+                <th>From → To</th>
+                <th>Departure</th>
+                <th>Seats</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for flight in flights %}
+            <tr>
+                <td>{{ flight.flight_number }}</td>
+                <td>{{ flight.airline_name }}</td>
+                <td>{{ flight.from_city }} → {{ flight.to_city }}</td>
+                <td>{{ flight.departure_date }} {{ flight.departure_time }}</td>
+                <td>{{ flight.seats_available }}</td>
+                <td>{{ flight.price }}</td>
+                <td>
+                    <form action="{% url 'delete_flight' flight.id %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-danger btn-sm" onclick="return confirm('Delete this flight?')">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">No flights available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<section class="probootstrap-cover overflow-hidden relative mt-0 pt-0"
+         style="background-image: url('{% static 'assets/images/bg_1.jpg' %}');" id="section-home">
+
+    <div class="overlay" style="pointer-events: none;"></div>
+
+    <div class="container d-flex justify-content-center align-items-center" style="height:80vh;">
+        <div class="bg-white p-4 rounded shadow text-center"
+             style="max-width:400px; width:100%; position: relative; z-index: 2;">
+            {% if no_seats %}
+            <div class="alert alert-danger text-center">
+                No seats available for this flight.
+            </div>
+            <div class="text-center mt-3">
+                <a href="{% url 'for_airlines' %}" class="btn btn-secondary w-50">Back</a>
+            </div>
+            {% else %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <p class="text-dark">Available seats:{{ flight.seats_available }}</p>
+                    <label for="passenger_count">Enter Number of Passengers:</label>
+                    <input type="number" id="passenger_count" name="passenger_count"
+                           class="form-control" min="1" max="{{ flight.seats_available }}" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-50">Next</button>
+                </div>
+            </form>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

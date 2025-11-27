@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<section class="probootstrap-cover overflow-hidden relative mt-0 pt-0"
+         style="background-image: url('{% static 'assets/images/bg_1.jpg' %}');" id="section-home">
+
+    <!--    <div class="overlay" style="pointer-events: none;"></div>-->
+
+
+    <div class="container py-5 mt-3">
+        <div class="bg-white text-dark p-4 rounded shadow-lg">
+
+
+            <h3 class="mb-4 text-center">Selected Flight Details</h3>
+
+
+            <div class="border p-3 mb-4 rounded ">
+
+                <p class="text-dark"><strong>Flight Number:</strong> {{ flight.flight_number }}</p>
+                <p class="text-dark"><strong>Airline:</strong> {{ flight.airline_name }}</p>
+                <p class="text-dark"><strong>From:</strong> {{ flight.from_city }}</p>
+                <p class="text-dark"><strong>To:</strong> {{ flight.to_city }}</p>
+                <p class="text-dark"><strong>Departure:</strong> {{ flight.departure_date }} {{ flight.departure_time }}
+                </p>
+                <p class="text-dark"><strong>Arrival:</strong> {{ flight.arrival_date }} {{ flight.arrival_time }}</p>
+                <p class="text-dark"><strong>Price per Ticket:</strong> ₹{{ flight.price }}</p>
+                <p class="text-dark"><strong>Travel Class:</strong> {{ flight.travel_class }}</p>
+
+            </div>
+
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- Passenger Details Section -->
+                <h4 class="text-center mb-4">Add Passenger Details</h4>
+                {% for form in passenger_forms %}
+                <div class="border p-4 mb-3 rounded bg-light shadow-sm">
+                    <h5 class="mb-3">Passenger {{ forloop.counter }}</h5>
+                    {{ form|crispy }}
+                </div>
+                {% endfor %}
+
+                <!-- Contact Information Section -->
+                <h4 class="text-center mb-4 mt-5">Contact Information</h4>
+                <div class="border p-4 mb-3 rounded bg-light shadow-sm">
+                    {{ contact_form|crispy }}
+                </div>
+
+                <!-- Booking Summary Section -->
+                <div class="border p-4 mt-4 rounded text-center bg-primary text-white shadow-sm">
+                    <p><strong>Total Passengers:</strong> {{ total_passengers }}</p>
+                    <p><strong>Total Price:</strong> ₹{{ total_price }}</p>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'home' %}" class="btn btn-secondary w-25  me-2">Back to Home</a>
+                    <button type="submit" class="btn btn-danger w-25 ">Pay Now</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

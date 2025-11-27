@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="probootstrap-cover overflow-hidden relative"
+         style="background-image: url('{% static 'assets/images/bg_1.jpg' %}');">
+    <div class="container py-5">
+        <div class="bg-white text-dark p-5 rounded shadow-lg text-center">
+            <h2 class="text-success">Payment Successful!</h2>
+            <p class="lead">Your booking has been confirmed.</p>
+
+            <div class="border p-4 mt-4 text-start">
+                <h4>Ticket Information</h4>
+                <p class="text-dark"><strong>Flight:</strong> {{ flight.flight_number }} ({{ flight.airline_name }})</p>
+                <p class="text-dark"><strong>From:</strong> {{ flight.from_city }}</p>
+                <p class="text-dark"><strong>To:</strong> {{ flight.to_city }}</p>
+                <p class="text-dark"><strong>Date:</strong> {{ flight.departure_date }}</p>
+                <p class="text-dark"><strong>Total Passengers:</strong> {{ booking.total_passengers }}</p>
+                <p class="text-dark"><strong>Total Paid:</strong> ₹{{ booking.total_price }}</p>
+            </div>
+            <div class="border p-4 mt-4 text-start">
+                <h4>Passenger Details</h4>
+                {% for passenger in booking.passengers.all %}
+                <p class="text-dark"><strong>Name:</strong> {{ passenger.full_name }}</p>
+                <p class="text-dark"><strong>Passport Number:</strong> {{ passenger.passport_number }}</p>
+                <p class="text-dark"><strong>Age:</strong> {{ passenger.age }}</p>
+                <hr>
+                {% endfor %}
+
+            </div>
+
+
+            <div class="text-center mt-4">
+                <a href="{% url 'home' %}" class="btn btn-primary me-4">Back to Home</a>
+                <a href="{% url 'download_ticket' booking.id %}"
+                   class="btn btn-success mt-3"
+                   onclick="setTimeout(() => window.location.href='{% url 'home' %}', 2000)">
+                     Download Ticket (PDF)
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

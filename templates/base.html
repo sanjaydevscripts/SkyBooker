@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Places &mdash; Free HTML5 Bootstrap 4 Theme by ProBootstrap.com</title>
+    <meta name="description" content="Free Bootstrap 4 Theme by ProBootstrap.com">
+    <meta name="keywords"
+          content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/fonts/ionicons/css/ionicons.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/flaticon/font/flaticon.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/select2.css' %}">
+
+
+    <link rel="stylesheet" href="{% static 'assets/css/helpers.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark probootstrap_navbar " id="probootstrap-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">SkyBooker</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-menu"
+                aria-controls="probootstrap-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span><i class="ion-navicon"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="probootstrap-menu">
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+
+                    {% if user.is_staff %}
+
+                    <!-- ADMIN NAVBAR -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add_flight' %}">Add Flight</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+
+                    {% else %}
+
+                <!-- NORMAL USER VIEW -->
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">CustomerSupport</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'for_airlines' %}">ForAirlines</a></li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                        <a class="dropdown-item" href="{% url 'booking_history' %}">Booking History</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </li>
+
+                {% endif %}
+
+                {% else %}
+                <!-- NOT LOGGED IN -->
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">CustomerSupport</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+
+
+{% block content %}
+
+sanjay
+
+{% endblock %}
+
+
+
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+
+<script src="{% static 'assets/js/bootstrap-datepicker.js' %}"></script>
+<script src="{% static 'assets/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.easing.1.3.js' %}"></script>
+
+<script src="{% static 'assets/js/select2.min.js' %}"></script>
+
+<script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+</html>
